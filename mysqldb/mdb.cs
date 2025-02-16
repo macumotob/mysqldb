@@ -1,11 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace mysqldb
 {
     public static class mdb
@@ -25,17 +18,14 @@ namespace mysqldb
         }
         private static MySqlConnection _GetDBConnection()
         {
-            String connString = "Server=" + _host + ";Database=" + _database
-                      + ";port=" + _port + ";User Id=" + _username + ";password=" + _password
-                       //+ ";TLS Version=TLS 1.3";
-                       + ";SslMode=none;"
-                       ;
+     
+            string connString = $"Server={_host};Database={_database};Port={_port};User Id={_username};Password={_password};SslMode=none;";
+
             var conn = new MySqlConnection(connString);
             return conn;
         }
         private static MySqlConnection Connect()
         {
-            //return ConnectToVasylDb();
             var conn = _GetDBConnection();
             conn.Open();
             return conn;
@@ -55,7 +45,7 @@ namespace mysqldb
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+               throw new Exception(_database, ex);
             }
         }
 
