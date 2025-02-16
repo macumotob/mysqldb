@@ -16,7 +16,7 @@ namespace mysqldb
             _username = user;
             _password = password;
         }
-        private static MySqlConnection _GetDBConnection()
+        private static MySqlConnection _connect()
         {
      
             string connString = $"Server={_host};Database={_database};Port={_port};User Id={_username};Password={_password};SslMode=none;";
@@ -26,7 +26,7 @@ namespace mysqldb
         }
         private static MySqlConnection Connect()
         {
-            var conn = _GetDBConnection();
+            var conn = _connect();
             conn.Open();
             return conn;
         }
