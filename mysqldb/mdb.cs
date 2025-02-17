@@ -49,12 +49,12 @@ namespace mysqldb
             }
         }
 
-        public static Result exec<T>(T data, Func<MySqlCommand, T, Result> action)
+        public static DbResult exec<T>(T data, Func<MySqlCommand, T, DbResult> action)
         {
             MySqlConnection conn = null; 
             try
             {
-                var result = Result.Error("som error");
+                var result = DbResult.Error("som error");
 
                 using (conn = mdb.Connect())
                 {
@@ -69,19 +69,19 @@ namespace mysqldb
             }
             catch (Exception ex)
             {
-                return Result.Error(ex.Message);
+                return DbResult.Error(ex.Message);
             }
             finally
             {
                 mdb.Close(conn);
             }
         }
-        public static Result exec<T>(T data, Func<MySqlConnection, MySqlCommand, T, Result> action)
+        public static DbResult exec<T>(T data, Func<MySqlConnection, MySqlCommand, T, DbResult> action)
         {
             MySqlConnection conn = null;
             try
             {
-                var result = Result.Error("som error");
+                var result = DbResult.Error("som error");
 
                 using (conn = mdb.Connect())
                 {
@@ -96,7 +96,7 @@ namespace mysqldb
             }
             catch (Exception ex)
             {
-                return Result.Error(ex.Message);
+                return DbResult.Error(ex.Message);
             }
             finally
             {
@@ -104,12 +104,12 @@ namespace mysqldb
             }
 
         }
-        public static Result exec(Func<MySqlConnection, MySqlCommand, Result> action)
+        public static DbResult exec(Func<MySqlConnection, MySqlCommand, DbResult> action)
         {
             MySqlConnection conn = null;
             try
             {
-                var result = Result.Error("som error");
+                var result = DbResult.Error("som error");
                 using (conn = mdb.Connect())
                 {
                     using (var command = conn.CreateCommand())
@@ -123,7 +123,7 @@ namespace mysqldb
             }
             catch (Exception ex)
             {
-                return Result.Error(ex.Message);
+                return DbResult.Error(ex.Message);
             }
             finally
             {

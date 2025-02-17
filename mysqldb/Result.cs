@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace mysqldb
 {
-    public class Result
+    public class DbResult
     {
         public bool success { get; set; }
         public object? data { get; set; }
       
-        public Result(bool success, object data)
+        public DbResult(bool success, object data)
         {
             this.success = success;
             this.data = data;
         }
-        public static Result Error(string msg) => new Result(false, msg);
-        public static Result Error(Exception ex) => new Result(true, ex.Message);
-        public static Result Success(object data) => new Result(true,data);
-        public static Result Success() => new Result(true,null);
+        public static DbResult Error(string msg) => new DbResult(false, msg);
+        public static DbResult Error(Exception ex) => new DbResult(true, ex.Message);
+        public static DbResult Success(object data) => new DbResult(true,data);
+        public static DbResult Success() => new DbResult(true,null);
       
     }
 }
