@@ -10,16 +10,28 @@ namespace mysqldb
     {
         public bool success { get; set; }
         public object? data { get; set; }
-      
+
         public DbResult(bool success, object data)
         {
             this.success = success;
             this.data = data;
         }
+        public T? Get<T>()
+        {
+            if (success)
+            {
+                return data is T value ? value : default!;
+            }
+            else
+            {
+                return default;
+            }
+
+        }
+
         public static DbResult Error(string msg) => new DbResult(false, msg);
         public static DbResult Error(Exception ex) => new DbResult(true, ex.Message);
-        public static DbResult Success(object data) => new DbResult(true,data);
-        public static DbResult Success() => new DbResult(true,null);
-      
+        public static DbResult Success(object data) => new DbResult(true, data);
+        public static DbResult Success() => new DbResult(true, null);
     }
 }
