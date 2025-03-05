@@ -9,6 +9,7 @@ namespace mysqldb
         private static string _password = string.Empty;
         private static string _database = string.Empty;
 
+        public static string Database => _database;
         public static void use(string host,string user,string password,string databse)
         {
             _host = host;
@@ -131,6 +132,32 @@ namespace mysqldb
             }
 
         }
+        public static DbResult exec(Func<MySqlCommand, DbResult> action)
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                var result = DbResult.Error("som error");
+                using (conn = mdb.Connect())
+                {
+                    using (var command = conn.CreateCommand())
+                    {
+                        result = action(command);
+                    }
+                    mdb.Close(conn);
+                    return result;
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return DbResult.Error(ex.Message);
+            }
+            finally
+            {
+                mdb.Close(conn);
+            }
+
+        }
     }
 }
